@@ -3,6 +3,8 @@ console.log("node.js started");
 const express = require('express');
 const app = express();
 
+console.log("ECS_CLUSTER_NAME=%s", process.env.ECS_CLUSTER_NAME);
+
 if (process.env.NODE_ENV !== 'prod') {
     require('dotenv').config();
 }
@@ -15,11 +17,6 @@ const listener = app.listen(PORT, () => {
 });
 
 app.use(express.static('public'));
-app.get("/", (req, res) => {
-    res.contentType('html');
-    res.status(200).sendFile(__dirname + '/src/index.html');
-    console.log("GET: src/index.html is released");
-});
 
 app.get("/run_api.js", (req, res) => {
     res.contentType('javascript');
