@@ -6,12 +6,14 @@ if (process.env.NODE_ENV !== 'prod') {
     require('dotenv').config();
 }
 const web_origin = process.env.WEBORIGIN || "http://localhost:3000";
+//const web_origin = "http://";
+console.log("allow cors on web_origin:%s", web_origin);
 
 const cors = require('cors');
 app.use(cors({
-    origin: web_origin,
+//    origin: web_origin,
+    origin: "*",
     methods: "GET, POST",
-
 }));
 const port = process.env.PORT || 3001;
 
