@@ -1,31 +1,6 @@
-import {
-    SecretsManagerClient,
-    GetSecretValueCommand,
-  } from "@aws-sdk/client-secrets-manager";
-  
-  const secret_name = "prod/apiurl";
-  
-  const client = new SecretsManagerClient({
-    region: "ap-northeast-1",
-  });
-  
-  let response;
-  
-  try {
-    response = await client.send(
-      new GetSecretValueCommand({
-        SecretId: secret_name,
-        VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
-      })
-    );
-  } catch (error) {
-    // For a list of exceptions thrown, see
-    // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-    throw error;
-  }
-  
-const api_origin = response.SecretString;
-// http://aws-m-LoadB-1T5EFACR21HHG-d4daa49520a3f602.elb.ap-northeast-1.amazonaws.com:3001
+//const api_origin = "http://172.31.14.22:3001";
+const api_origin = "http://api.aws-multi-container-example.local";
+// const api_origin = "http://";
 
 var prices = [{"name": "", "id": 1, "price": 0}]; // dummy
 
@@ -71,8 +46,9 @@ function createPriceTable() {
 }
 
 async function callApi() {
-    const res = await fetch(api_origin + "/fruit/prices");
-    return await res.json();
+  console.log("Accessing to URL:%s", api_origin + "/fruit/prices");
+  const res = await fetch(api_origin + "/fruit/prices");
+  return await res.json();
 }
 
 async function callPostApi(name, price) {
