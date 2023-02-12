@@ -3,12 +3,12 @@ console.log("node.js started");
 const express = require('express');
 const app = express();
 
-console.log("ECS_CLUSTER_NAME=%s", process.env.ECS_CLUSTER_NAME);
+console.log("NODE_ENV=%s", process.env.NODE_ENV);
 
 if (process.env.NODE_ENV !== 'prod') {
     require('dotenv').config();
 }
-const APIORIGIN = process.env.APIORIGIN || "http://localhost:3001";
+const APIORIGIN = process.env.APIORIGIN || "http://api:3001";
 console.log("API end point is %s", APIORIGIN + "/fruit/prices");
 const PORT = process.env.PORT || 3000;
 
